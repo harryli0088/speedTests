@@ -21,7 +21,7 @@ let obj = {}; //initialize empty object
 for(let i=0; i<num; ++i) {
   obj[i] = {}; //add empty objects to object
 }
-console.log("Obj done setting", new Date() - start);
+console.log("Object done setting", new Date() - start);
 for(let field in obj) {
   delete obj[field]; //delete objects
 }

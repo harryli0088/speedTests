@@ -12,7 +12,7 @@ These are the results on my computer with 100,000 elements using Node v10.15.3:
 
     Array pushing and splicing 51959
 
-    Obj done setting 23
+    Object done setting 23
 
     Object field setting and deleting 39
 
