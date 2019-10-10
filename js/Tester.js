@@ -2,11 +2,17 @@ function Tester(options = {}) {
   this.maxNum = options.maxNum || 10;
   this.maxIter = options.maxIter || 10;
 
-  this.function1ConsoleString = options.function1ConsoleString || "";
-  this.function2ConsoleString = options.function2ConsoleString || "";
-
-  this.function1 = options.function1 || function() {};
-  this.function2 = options.function2 || function() {};
+  this.preFunction = options.preFunction || function() {};
+  this.function1 = {
+      run: options.function1.run || function() {},
+      consoleString: options.function1.consoleString || "",
+      heading: options.function1.heading || "",
+  }
+  this.function2 = {
+      run: options.function2.run || function() {},
+      consoleString: options.function2.consoleString || "",
+      heading: options.function2.heading || "",
+  }
 
   this.run = function() {
     let start;
@@ -15,7 +21,7 @@ function Tester(options = {}) {
     let outputString = `
     Run on my computer using Node ${process.version} with ${this.maxIter.toString()} iterations per test
 
-    | # of elements | Str Concat Time | Array Join Time |\n| --- | --- | --- |
+    | # of elements | ${this.function1.heading} | ${this.function2.heading} |\n| --- | --- | --- |
     `;
     for(let num=10; num <= this.maxNum; num=num*10) {
       outputString += "| " + num.toString() + " | ";
@@ -24,21 +30,23 @@ function Tester(options = {}) {
       time2 = 0;
 
       for(let iter = 0; iter<this.maxIter; ++iter) {
+        let preFunctionReturn = this.preFunction(num);
+
         start = new Date();
-        this.function1(num);
+        this.function1.run(num, preFunctionReturn);
         time1 += new Date() - start;
 
         start = new Date();
-        this.function2(num);
+        this.function2.run(num, preFunctionReturn);
         time2 += new Date() - start;
       }
 
       time1 = time1 / this.maxIter;
-      console.log("At ", num, " # of elements, average ", this.function1ConsoleString, " : ", time1);
+      console.log("At ", num, " # of elements, average ", this.function1.heading, " : ", time1);
       outputString += time1.toString() + " | ";
 
       time2 = time2 / this.maxIter;
-      console.log("At ", num, " # of elements, average ", this.function2ConsoleString, " : ", time2);
+      console.log("At ", num, " # of elements, average ", this.function2.heading, " : ", time2);
       outputString += time2.toString() + " |\n"
 
     }
