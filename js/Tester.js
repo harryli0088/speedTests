@@ -29,7 +29,7 @@ function Tester(options = {}) {
         time1 += new Date() - start;
 
         start = new Date();
-        this.function1(num);
+        this.function2(num);
         time2 += new Date() - start;
       }
 
