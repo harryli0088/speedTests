@@ -16,7 +16,7 @@ function createArray(num) {
 }
 
 function arraySplice(num, preFunctionReturn) {
-  let arr = JSON.parse(JSON.stringify(preFunctionReturn.array)); //copy the array before starting the time
+  let arr = preFunctionReturn.array; //copy the array before starting the time
   let i = 0;
   //while there are still elements to be chosen
   while(i < preFunctionReturn.sum) {
@@ -32,7 +32,7 @@ function arraySplice(num, preFunctionReturn) {
 }
 
 function skipping(num, preFunctionReturn) {
-  let arr = JSON.parse(JSON.stringify(preFunctionReturn.array)); //copy the array before starting the time
+  let arr = preFunctionReturn.array; //copy the array before starting the time
   i = 0;
   start = new Date();
   //while there are still elements to be chosen

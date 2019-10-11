@@ -2,7 +2,7 @@ const Tester = require("../Tester.js");
 
 
 
-function array(num) {
+function arrayForLoop(num) {
   let array = [];
   for(let i=0; i<num; ++i) {
     array.push(i)
@@ -12,7 +12,15 @@ function array(num) {
   }
 }
 
-function object(num) {
+function arrayForEach(num) {
+  let array = [];
+  for(let i=0; i<num; ++i) {
+    array.push(i)
+  }
+  array.forEach((e,i) => array[i] = 1);
+}
+
+function objectForIn(num) {
   let obj = {};
   for(let i=0; i<num; ++i) {
     obj[i] = i;
@@ -22,6 +30,13 @@ function object(num) {
   }
 }
 
+function objectForEach(num) {
+  let obj = {};
+  for(let i=0; i<num; ++i) {
+    obj[i] = i;
+  }
+  Object.keys(obj).forEach(key => obj[key] = 1);
+}
 
 
 const test = new Tester({
@@ -29,13 +44,21 @@ const test = new Tester({
   maxIter: 10,
   functions: [
     {
-      run: array,
-      heading: "Array"
+      run: arrayForLoop,
+      heading: "Array for loop"
     },
     {
-      heading: "Object",
-      run: object
-    }
+      run: arrayForEach,
+      heading: "Array for each"
+    },
+    {
+      run: objectForIn,
+      heading: "Object for in"
+    },
+    {
+      run: objectForEach,
+      heading: "Object for each"
+    },
   ]
 });
 
