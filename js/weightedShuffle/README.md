@@ -7,16 +7,6 @@ In this test, we randomly choose elements from the starting array. Each time an 
 
 
 ## Results
-These are the results on my computer with 1,000,000 elements using Node v10.15.3:
-
-    Array length:  1000000 ; Sum:  5501762
-
-    Splicing finished elements out of array:  252414
-
-    Skipping over to the next available element:  5969
-
-
-It seems that splicing the elements is expensive, and it is more time efficient to simply skip over the finished elements.
 
 
 ## Inspiration

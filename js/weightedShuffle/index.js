@@ -60,14 +60,16 @@ const test = new Tester({
   maxNum: 1000000,
   maxIter: 10,
   preFunction: createArray,
-  function1: {
-    run: arraySplice,
-    heading: "Array splice"
-  },
-  function2: {
-    heading: "Skipping",
-    run: skipping
-  }
+  functions: [
+    {
+      run: arraySplice,
+      heading: "Array splice"
+    },
+    {
+      heading: "Skipping",
+      run: skipping
+    }
+  ]
 });
 
 test.run();

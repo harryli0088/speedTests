@@ -27,14 +27,16 @@ function objectDelete(num) {
 const test = new Tester({
   maxNum: 1000000,
   maxIter: 10,
-  function1: {
-    run: arraySplice,
-    heading: "Array Splice"
-  },
-  function2: {
-    heading: "Object Delete",
-    run: objectDelete
-  }
+  functions: [
+    {
+      run: arraySplice,
+      heading: "Array Splice"
+    },
+    {
+      heading: "Object Delete",
+      run: objectDelete
+    }
+  ]
 });
 
 test.run();

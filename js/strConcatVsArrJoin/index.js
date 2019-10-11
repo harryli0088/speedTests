@@ -24,14 +24,16 @@ function arrayJoin(num) {
 const test = new Tester({
   maxNum: 10000000,
   maxIter: 10,
-  function1: {
-    heading: "String Concatenation",
-    run: stringConcat
-  },
-  function2: {
-    heading: "Array Join",
-    run: arrayJoin
-  }
+  functions: [
+    {
+      heading: "String Concatenation",
+      run: stringConcat
+    },
+    {
+      heading: "Array Join",
+      run: arrayJoin
+    }
+  ]
 });
 
 test.run();

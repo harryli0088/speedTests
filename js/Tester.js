@@ -3,55 +3,42 @@ function Tester(options = {}) {
   this.maxIter = options.maxIter || 10;
 
   this.preFunction = options.preFunction || function() {};
-  this.function1 = {
-      run: options.function1.run || function() {},
-      consoleString: options.function1.consoleString || "",
-      heading: options.function1.heading || "",
-  }
-  this.function2 = {
-      run: options.function2.run || function() {},
-      consoleString: options.function2.consoleString || "",
-      heading: options.function2.heading || "",
-  }
+    this.functions = options.functions || []; //each function should be an object with the structure {run: functino, heading: string}
 
-  this.run = function() {
-    let start;
-    let time1 = 0;
-    let time2 = 0;
-    let outputString = `
-    Run on my computer using Node ${process.version} with ${this.maxIter.toString()} iterations per test
+    this.run = function() {
+      let start;
+      let time = 0;
+      let tableString = `
+      Run on my computer using Node ${process.version} with ${this.maxIter.toString()} iterations per test
 
-    | # of elements | ${this.function1.heading} | ${this.function2.heading} |\n| --- | --- | --- |
-    `;
-    for(let num=10; num <= this.maxNum; num=num*10) {
-      outputString += "| " + num.toString() + " | ";
+      | # of elements | ${this.functions.map(f => f.heading).join(" | ")} |\n| --- | --- | --- |
+      `; //initialize README table
 
-      time1 = 0;
-      time2 = 0;
+      //run functions on several numbers of elements
+      for(let num=10; num <= this.maxNum; num=num*10) {
+        tableString += "| " + num.toString() + " | ";
 
-      for(let iter = 0; iter<this.maxIter; ++iter) {
-        let preFunctionReturn = this.preFunction(num);
+        let preFunctionReturn = this.preFunction(num) || {}; //for this num, run preFunction
 
-        start = new Date();
-        this.function1.run(num, preFunctionReturn);
-        time1 += new Date() - start;
+        //run all functions
+        for(let functionIndex=0; functionIndex<this.functions.length; ++functionIndex) {
+          time = 0;
+          for(let iter = 0; iter<this.maxIter; ++iter) {
+            start = new Date();
+            this.functions[functionIndex].run(num, JSON.parse(JSON.stringify(preFunctionReturn)) ); //run function with num and JSON-copied preFunctionReturn
+            time += new Date() - start; //sum times taken
+          }
 
-        start = new Date();
-        this.function2.run(num, preFunctionReturn);
-        time2 += new Date() - start;
+          time = time / this.maxIter; //get average of time taken
+          console.log("At ", num, " # of elements, average ", this.functions[functionIndex].heading, " : ", time);
+          tableString += time.toString() + " | "; //add average to table
+
+        }
+
+        tableString += "\n"; //add new table row
       }
-
-      time1 = time1 / this.maxIter;
-      console.log("At ", num, " # of elements, average ", this.function1.heading, " : ", time1);
-      outputString += time1.toString() + " | ";
-
-      time2 = time2 / this.maxIter;
-      console.log("At ", num, " # of elements, average ", this.function2.heading, " : ", time2);
-      outputString += time2.toString() + " |\n"
-
+      console.log(tableString); //console table
     }
-    console.log(outputString);
   }
-}
 
-module.exports = Tester;
+  module.exports = Tester;
