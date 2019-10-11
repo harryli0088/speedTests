@@ -24,8 +24,9 @@ function Tester(options = {}) {
         for(let functionIndex=0; functionIndex<this.functions.length; ++functionIndex) {
           time = 0;
           for(let iter = 0; iter<this.maxIter; ++iter) {
+            let preFunctionReturnCopy = JSON.parse(JSON.stringify(preFunctionReturn));
             start = new Date();
-            this.functions[functionIndex].run(num, JSON.parse(JSON.stringify(preFunctionReturn)) ); //run function with num and JSON-copied preFunctionReturn
+            this.functions[functionIndex].run(num, preFunctionReturnCopy ); //run function with num and JSON-copied preFunctionReturn
             time += new Date() - start; //sum times taken
           }
 
